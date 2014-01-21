@@ -1,0 +1,14 @@
+﻿Name: EXPEDIT Licensing
+AntiForgery: disabled
+Author: The EXPEDIT Team
+Website: http://expedit.com.au
+Version: 1.0
+OrchardVersion: 1.0
+Description: Licensing web module by EXPEDIT.
+Category: Business
+Features:
+    EXPEDIT.License: 
+        Description: Licensing web module by EXPEDIT.
+		Dependencies: Orchard.Email,XODB,Orchard.Media,XmlRpc,Orchard.Search
+		Category: Business
+		Priority: 10
