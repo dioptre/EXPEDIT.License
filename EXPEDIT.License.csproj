@@ -125,6 +125,10 @@
     <Content Include="Module.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\EXPEDIT.Licence\EXPEDIT.Licence.csproj">
+      <Project>{359608d7-fafe-40e9-90c6-bd6df1c0fdcc}</Project>
+      <Name>EXPEDIT.Licence</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\XODB.Module.BusinessObjects\XODB.Module.BusinessObjects.csproj">
       <Project>{380151d5-c92f-404a-8b89-b788f574d228}</Project>
       <Name>XODB.Module.BusinessObjects</Name>
@@ -156,13 +160,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Helpers\AUTH_Gmail_OAuth1_3leg.cs" />
     <Compile Include="Helpers\ConstantsHelper.cs" />
-    <Compile Include="Helpers\Program.cs" />
     <Compile Include="Route.cs" />
-    <Compile Include="Services\ITicketsService.cs" />
-    <Compile Include="Services\TicketsService.cs" />
-    <Compile Include="ViewModels\TicketsViewModel.cs" />
+    <Compile Include="Services\ILicenseService.cs" />
+    <Compile Include="Services\LicenseService.cs" />
+    <Compile Include="ViewModels\LicenseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

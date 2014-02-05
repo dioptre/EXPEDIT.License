@@ -229,5 +229,19 @@ namespace EXPEDIT.License.Controllers {
         //    }
         //}
 
+        [Themed(false)]
+        [ValidateInput(false)]
+        public ActionResult Referral(string id, string name)
+        {
+            try
+            {
+                return new JsonHelper.JsonNetResult(_License.GetTrustTree(), JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return new JsonHelper.JsonNetResult(string.Empty, JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
 }
