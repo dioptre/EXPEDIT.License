@@ -85,6 +85,10 @@
     <Reference Include="MigraDoc.RtfRendering">
       <HintPath>..\..\..\..\lib\pdfsharp\MigraDoc.RtfRendering.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\newtonsoft.json\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PdfSharp">
       <HintPath>..\..\..\..\lib\pdfsharp\PdfSharp.dll</HintPath>
     </Reference>
@@ -164,6 +168,7 @@
     <Compile Include="Route.cs" />
     <Compile Include="Services\ILicenseService.cs" />
     <Compile Include="Services\LicenseService.cs" />
+    <Compile Include="Services\XmlRpcHandler.cs" />
     <Compile Include="ViewModels\LicenseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

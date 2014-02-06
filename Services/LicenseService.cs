@@ -30,6 +30,8 @@ using EXPEDIT.License.Helpers;
 using Orchard.DisplayManagement;
 using ImpromptuInterface;
 using XODB.Models;
+using EXPEDIT.License.ViewModels;
+using EXPEDIT.Licence.Models;
 
 namespace EXPEDIT.License.Services {
     
@@ -85,12 +87,16 @@ namespace EXPEDIT.License.Services {
             }
         }
 
-
-        public string RenewSession(ref LicenseViewModel m)
+        public ILicenceSession RenewSession(LicenseViewModel m)
         {
-            //Sign licence
             return null;
         }
+
+        public ILicence GetContactInfo(LicenseViewModel m)
+        {
+            return null;
+        }
+
        
     }
 }

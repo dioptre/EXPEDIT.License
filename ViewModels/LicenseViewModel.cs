@@ -4,27 +4,32 @@ using System.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EXPEDIT.Licence.Models;
+using Newtonsoft.Json;
 
 namespace EXPEDIT.License.ViewModels
 {
-    public class LicenseViewModel : EXPEDIT.Licence.Models.ILicenceSession
+    [JsonObject]
+    public class LicenseViewModel : ILicenceSession, ILicence, ISignature
     {
-        public Guid ContactID { get; set; }
-        public Guid CompanyID { get; set; }
-        public Guid LicenseID { get; set; }
-
         public Guid? SessionID { get; set; }
+        public string SessionHash { get; set; }
         public string MachineHash { get; set; }
-        public string SessionPublicKey { get; set; }
-        public DateTime SessionCreated { get; set; }
-        public string SessionNonce { get; set; }
-        public string SessionKey { get; set; }
+        public string UserHash { get; set; }
+        public Guid? LicenseID { get; set; }
+        public Guid? ContactID { get; set; }
+        public Guid? CompanyID { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string PublicKey { get; set; }
+        [JsonIgnore]
+        public string PrivateKey { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Expires { get; set; }
+        public string Nonce { get; set; }
+        public string Signature { get; set; }
+        public Guid? AuthorisedByCompanyID { get; set; }
 
-        public string ResponseSigned { get; set; }
-        public Guid? ResponseCompanyID { get; set; }
-        public Guid? ResponseSessionID { get; set; }
-        public string ResponseSessionNonce { get; set; }
-        public string ResponseSessionKey { get; set; }
-        public string ResponseSessionPublicKey { get; set; }
+      
     }
 }

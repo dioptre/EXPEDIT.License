@@ -4,7 +4,9 @@ using System.IO;
 using System.Web;
 using Orchard;
 using System.ServiceModel;
-using XODB.Module.BusinessObjects;
+
+using EXPEDIT.License.ViewModels;
+using EXPEDIT.Licence.Models;
 
 namespace EXPEDIT.License.Services
 {
@@ -13,6 +15,12 @@ namespace EXPEDIT.License.Services
     {
          [OperationContract]
          string GetTrustTree(Guid? trustTreeRootID = default(Guid?));
+
+         [OperationContract]
+         ILicenceSession RenewSession(LicenseViewModel m);
+
+         [OperationContract]
+         ILicence GetContactInfo(LicenseViewModel m);
 
     }
 }
