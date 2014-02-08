@@ -31,7 +31,6 @@ namespace EXPEDIT.License.Controllers {
         public IOrchardServices Services { get; set; }
         private ILicenseService _License { get; set; }
         public ILogger Logger { get; set; }
-        private readonly ISearchService _searchService;
         private readonly IContentManager _contentManager;
         private readonly ISiteService _siteService;
 

@@ -17,10 +17,10 @@ namespace EXPEDIT.License.Services
          string GetTrustTree(Guid? trustTreeRootID = default(Guid?));
 
          [OperationContract]
-         ILicenceSession RenewSession(LicenseViewModel m);
+         ILicenceSession RenewSession(ILicenceSession m);
 
          [OperationContract]
-         ILicence GetContactInfo(LicenseViewModel m);
+         ILicence GetContactInfo(ILicence m);
 
     }
 }

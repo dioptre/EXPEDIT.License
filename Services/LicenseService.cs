@@ -87,14 +87,23 @@ namespace EXPEDIT.License.Services {
             }
         }
 
-        public ILicenceSession RenewSession(LicenseViewModel m)
+        public ILicenceSession RenewSession(ILicenceSession m)
         {
             return null;
         }
 
-        public ILicence GetContactInfo(LicenseViewModel m)
+        public ILicence GetContactInfo(ILicence m)
         {
-            return null;
+            try
+            {
+                m.ContactID = _users.GetContactID(m.Username);
+                m.CompanyID = _users.GetDefaultCompanyID(m.ContactID);
+                return m;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
        

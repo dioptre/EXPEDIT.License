@@ -95,6 +95,9 @@
     <Reference Include="PdfSharp.Charting">
       <HintPath>..\..\..\..\lib\pdfsharp\PdfSharp.Charting.dll</HintPath>
     </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\..\..\..\lib\protobuf-net\protobuf-net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations">

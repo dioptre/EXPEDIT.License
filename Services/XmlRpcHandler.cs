@@ -23,8 +23,9 @@ using EXPEDIT.Licence.Models;
 using EXPEDIT.License.Helpers;
 using System.Dynamic;
 using ImpromptuInterface;
-
+using XODB.Services;
 using EXPEDIT.License.ViewModels;
+
 
 namespace EXPEDIT.License.Services {
     [UsedImplicitly]
@@ -34,17 +35,20 @@ namespace EXPEDIT.License.Services {
         private readonly IMembershipService _membershipService;
         private readonly RouteCollection _routeCollection;
         private readonly ILicenseService _license;
+        private readonly IUsersService _users;
 
         public XmlRpcHandler(IContentManager contentManager,
             IAuthorizationService authorizationService, 
             IMembershipService membershipService, 
             RouteCollection routeCollection,
-            ILicenseService license) {
+            ILicenseService license,
+            IUsersService users) {
             _contentManager = contentManager;
             _authorizationService = authorizationService;
             _membershipService = membershipService;
             _routeCollection = routeCollection;
             _license = license;
+            _users = users;
             Logger = NullLogger.Instance;
             T = NullLocalizer.Instance;
         }
@@ -79,28 +83,38 @@ namespace EXPEDIT.License.Services {
         string license,
         IEnumerable<IXmlRpcDriver> drivers)
         {
-            var l = JsonConvert.DeserializeObject<LicenseViewModel>(license.Decrypt(ConstantsHelper.KEY_PRIVATE_DEFAULT));
-            IUser user = ValidateUser(l.Username, l.Password);
+            var l = license.Decrypt<SessionRequest>(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);
+            if (!l.Nonce.CheckNonce())
+                throw new Orchard.OrchardCoreException(T("Your machine's date and time is out of sync with the credential service."));
+            IUser user = validateUser(l.Username, l.Password);
             foreach (var driver in drivers)
                 driver.Process(l.Username);
-            return JsonConvert.SerializeObject(_license.GetContactInfo(l));
+            var m = _license.GetContactInfo(l);
+            m.Password = null;
+            m.AuthorisedByCompanyID = _users.ApplicationCompanyID;
+            return m.SignAndSerialize(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);
         }
 
         private string renewSession(
             string license,
             IEnumerable<IXmlRpcDriver> drivers) {
-                var l = JsonConvert.DeserializeObject<LicenseViewModel>(license.Decrypt(ConstantsHelper.KEY_PRIVATE_DEFAULT));
-            
-                IUser user = ValidateUser(l.Username, l.Password);
+                var l = license.Decrypt<SessionRequest>(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);
+                if (!l.Nonce.CheckNonce())
+                    throw new Orchard.OrchardCoreException(T("Your machine's date and time is out of sync with the credential service."));
+                IUser user = validateUser(l.Username, l.Password);
                 ////_authorizationService.CheckAccess(Permissions.DeleteBlogPost, user, blogPost);
-
                 foreach (var driver in drivers)
                     driver.Process(l.Username);
                 //HttpUtility.UrlEncode
-                return JsonConvert.SerializeObject(_license.RenewSession(l));            
+                var m = _license.RenewSession(l);
+                if (m == null)
+                    return null;
+                m.Password = null;
+                m.AuthorisedByCompanyID = _users.ApplicationCompanyID;
+                return m.SignAndSerialize(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);          
         }
 
-        private IUser ValidateUser(string userName, string password) {
+        private IUser validateUser(string userName, string password) {
             IUser user = _membershipService.ValidateUser(userName, password);
             if (user == null) {
                 throw new Orchard.OrchardCoreException(T("The username or e-mail or password provided is incorrect."));
