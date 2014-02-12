@@ -89,7 +89,7 @@ namespace EXPEDIT.License.Services {
 
         public ISessionEncrypted RenewSession(ISessionEncrypted m)
         {
-            //Do checks here
+            //Do checks here            
             return null;
         }
 
