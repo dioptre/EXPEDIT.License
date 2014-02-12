@@ -17,7 +17,7 @@ namespace EXPEDIT.License.Services
          string GetTrustTree(Guid? trustTreeRootID = default(Guid?));
 
          [OperationContract]
-         ILicenceSession RenewSession(ILicenceSession m);
+         ISessionEncrypted RenewSession(ISessionEncrypted m);
 
          [OperationContract]
          ILicence GetContactInfo(ILicence m);

@@ -25,7 +25,7 @@ using System.Dynamic;
 using ImpromptuInterface;
 using XODB.Services;
 using EXPEDIT.License.ViewModels;
-
+using XODB.Helpers;
 
 namespace EXPEDIT.License.Services {
     [UsedImplicitly]
@@ -79,9 +79,7 @@ namespace EXPEDIT.License.Services {
             }
         }
 
-        private string getContactInfo(
-        string license,
-        IEnumerable<IXmlRpcDriver> drivers)
+        private string getContactInfo(string license, IEnumerable<IXmlRpcDriver> drivers)
         {
             var l = license.Decrypt<SessionRequest>(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);
             if (!l.Nonce.CheckNonce())
@@ -95,23 +93,37 @@ namespace EXPEDIT.License.Services {
             return m.SignAndSerialize(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);
         }
 
-        private string renewSession(
-            string license,
-            IEnumerable<IXmlRpcDriver> drivers) {
-                var l = license.Decrypt<SessionRequest>(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);
-                if (!l.Nonce.CheckNonce())
-                    throw new Orchard.OrchardCoreException(T("Your machine's date and time is out of sync with the credential service."));
-                IUser user = validateUser(l.Username, l.Password);
-                ////_authorizationService.CheckAccess(Permissions.DeleteBlogPost, user, blogPost);
-                foreach (var driver in drivers)
-                    driver.Process(l.Username);
-                //HttpUtility.UrlEncode
-                var m = _license.RenewSession(l);
-                if (m == null)
-                    return null;
-                m.Password = null;
-                m.AuthorisedByCompanyID = _users.ApplicationCompanyID;
-                return m.SignAndSerialize(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);          
+        private string renewSession(string license, IEnumerable<IXmlRpcDriver> drivers)
+        {
+            var sr = license.Decrypt<SessionRequest>(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);
+            if (!sr.Nonce.CheckNonce())
+                throw new Orchard.OrchardCoreException(T("Your machine's date and time is out of sync with the credential service."));
+            IUser user = validateUser(sr.Username, sr.Password);
+            ////_authorizationService.CheckAccess(Permissions.DeleteBlogPost, user, blogPost);
+            foreach (var driver in drivers)
+                driver.Process(sr.Username);
+            //HttpUtility.UrlEncode
+            var m = _license.RenewSession(sr);
+            if (m == null)
+                return null;
+            m.Password = null;
+            m.AuthorisedByCompanyID = _users.ApplicationCompanyID;
+            if (sr.RequestSessionNonce.HasValue)
+            {
+                m.EncryptedSessionExpiry = DateTime.UtcNow.AddDays(1);
+                m.ResponseSessionKey = CryptographyHelper.GenerateKey(256);
+                m.ResponseSessionNonce = GuidHelper.NewComb();
+                CacheHelper.AddToCache<ISessionEncrypted>(() => { return m; }, sr.RequestSessionNonce.Value.ToNonce(), new TimeSpan(24, 0, 0)); //24 Hours                    
+                m.Reference = CryptographyHelper.EncryptSymmetric<ISessionEncrypted>(m, sr.RequestSessionKey, sr.RequestSessionNonce.Value.ToNonce());
+            }
+            m.PrivateKey = null;
+            m.PublicKey = null;
+            //m.Nonce = null; NEED THIS
+            m.RequestSessionKey = null;
+            m.RequestSessionNonce = null;
+            m.ResponseSessionKey = null;
+            m.ResponseSessionNonce = null;
+            return m.SignAndSerialize(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);
         }
 
         private IUser validateUser(string userName, string password) {
