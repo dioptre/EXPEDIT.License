@@ -89,6 +89,7 @@ namespace EXPEDIT.License.Services {
 
         public ISessionEncrypted RenewSession(ISessionEncrypted m)
         {
+            //namecoind -server -rpcuser=user -rpcpassword=pwd --rpcallowip=127.0.0.1
             //Do checks here            
             return null;
         }
