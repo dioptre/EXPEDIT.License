@@ -6,7 +6,7 @@ using Orchard;
 using System.ServiceModel;
 
 using EXPEDIT.License.ViewModels;
-using EXPEDIT.Licence.Models;
+using CNX.Shared.Models;
 
 namespace EXPEDIT.License.Services
 {

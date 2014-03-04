@@ -18,20 +18,20 @@ using Orchard.Messaging.Services;
 using Orchard.Logging;
 using Orchard.Tasks.Scheduling;
 using Orchard.Data;
-#if XODB
-using XODB.Module.BusinessObjects;
+#if NKD
+using NKD.Module.BusinessObjects;
 #else
 using EXPEDIT.Utils.DAL.Models;
 #endif
-using XODB.Services;
+using NKD.Services;
 using Orchard.Media.Services;
 using EXPEDIT.License.ViewModels;
 using EXPEDIT.License.Helpers;
 using Orchard.DisplayManagement;
 using ImpromptuInterface;
-using XODB.Models;
+using NKD.Models;
 using EXPEDIT.License.ViewModels;
-using EXPEDIT.Licence.Models;
+using CNX.Shared.Models;
 
 namespace EXPEDIT.License.Services {
     
@@ -77,7 +77,7 @@ namespace EXPEDIT.License.Services {
                 var application = _users.ApplicationID;
                 using (new TransactionScope(TransactionScopeOption.Suppress))
                 {
-                    var d = new XODBC(_users.ApplicationConnectionString, null, false);
+                    var d = new NKDC(_users.ApplicationConnectionString, null, false);
                     return null;
                 }
             }

@@ -3,7 +3,7 @@ using Orchard.Localization;
 using Orchard;
 using EXPEDIT.License.Services;
 using Orchard.Themes;
-using XODB.Helpers;
+using NKD.Helpers;
 using System;
 using EXPEDIT.License.Helpers;
 using Orchard.DisplayManagement;
@@ -82,7 +82,7 @@ namespace EXPEDIT.License.Controllers {
 
         //    var file = _License.GetDownload(id, Request.GetIPAddress());
         //    if (file != null)
-        //        return new XODB.Handlers.FileGeneratingResult(string.Format("{0}-{1}-{2}", id, XODB.Helpers.DateHelper.NowInOnlineFormat, file.FileName).Trim(), "application/octet", stream => new System.IO.MemoryStream(file.FileBytes).WriteTo(stream));
+        //        return new NKD.Handlers.FileGeneratingResult(string.Format("{0}-{1}-{2}", id, NKD.Helpers.DateHelper.NowInOnlineFormat, file.FileName).Trim(), "application/octet", stream => new System.IO.MemoryStream(file.FileBytes).WriteTo(stream));
         //    return new HttpNotFoundResult();
         //}
 
@@ -101,7 +101,7 @@ namespace EXPEDIT.License.Controllers {
         //{
         //    var file = _License.GetFile(new Guid(id));
         //    if (file != null)
-        //        return new XODB.Handlers.FileGeneratingResult(string.Format("{0}-{1}-{2}", id, XODB.Helpers.DateHelper.NowInOnlineFormat, file.FileName).Trim(), "application/octet", stream => new System.IO.MemoryStream(file.FileBytes).WriteTo(stream));
+        //        return new NKD.Handlers.FileGeneratingResult(string.Format("{0}-{1}-{2}", id, NKD.Helpers.DateHelper.NowInOnlineFormat, file.FileName).Trim(), "application/octet", stream => new System.IO.MemoryStream(file.FileBytes).WriteTo(stream));
         //    return new HttpNotFoundResult();
         //}
 

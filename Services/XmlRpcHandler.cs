@@ -18,14 +18,14 @@ using Orchard.Security;
 using Orchard.Mvc.Html;
 using Orchard.Core.Title.Models;
 using Newtonsoft.Json;
-using EXPEDIT.Licence.Helpers;
-using EXPEDIT.Licence.Models;
+using CNX.Shared.Helpers;
+using CNX.Shared.Models;
 using EXPEDIT.License.Helpers;
 using System.Dynamic;
 using ImpromptuInterface;
-using XODB.Services;
+using NKD.Services;
 using EXPEDIT.License.ViewModels;
-using XODB.Helpers;
+using NKD.Helpers;
 
 namespace EXPEDIT.License.Services {
     [UsedImplicitly]
