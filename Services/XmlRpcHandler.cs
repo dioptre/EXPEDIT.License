@@ -20,7 +20,7 @@ using Orchard.Core.Title.Models;
 using Newtonsoft.Json;
 using CNX.Shared.Helpers;
 using CNX.Shared.Models;
-using EXPEDIT.License.Helpers;
+using EXPEDIT.Share.Helpers;
 using System.Dynamic;
 using ImpromptuInterface;
 using NKD.Services;
@@ -81,7 +81,7 @@ namespace EXPEDIT.License.Services {
 
         private string getContactInfo(string license, IEnumerable<IXmlRpcDriver> drivers)
         {
-            var l = license.Decrypt<SessionRequest>(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);
+            var l = license.Decrypt<SessionRequest>(LicenseService.KEY_PRIVATE_DEFAULT);
             if (!l.Nonce.CheckNonce())
                 throw new Orchard.OrchardCoreException(T("Your machine's date and time is out of sync with the credential service."));
             IUser user = validateUser(l.Username, l.Password);
@@ -90,12 +90,12 @@ namespace EXPEDIT.License.Services {
             var m = _license.GetContactInfo(l);
             m.Password = null;
             m.AuthorisedByCompanyID = _users.ApplicationCompanyID;
-            return m.SignAndSerialize(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);
+            return m.SignAndSerialize(LicenseService.KEY_PRIVATE_DEFAULT);
         }
 
         private string renewSession(string license, IEnumerable<IXmlRpcDriver> drivers)
         {
-            var sr = license.Decrypt<SessionRequest>(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);
+            var sr = license.Decrypt<SessionRequest>(LicenseService.KEY_PRIVATE_DEFAULT);
             if (!sr.Nonce.CheckNonce())
                 throw new Orchard.OrchardCoreException(T("Your machine's date and time is out of sync with the credential service."));
             IUser user = validateUser(sr.Username, sr.Password);
@@ -123,7 +123,7 @@ namespace EXPEDIT.License.Services {
             m.RequestSessionNonce = null;
             m.ResponseSessionKey = null;
             m.ResponseSessionNonce = null;
-            return m.SignAndSerialize(EXPEDIT.License.Helpers.ConstantsHelper.KEY_PRIVATE_DEFAULT);
+            return m.SignAndSerialize(LicenseService.KEY_PRIVATE_DEFAULT);
         }
 
         private IUser validateUser(string userName, string password) {

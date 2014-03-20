@@ -22,17 +22,26 @@ using NKD.Module.BusinessObjects;
 using NKD.Services;
 using Orchard.Media.Services;
 using EXPEDIT.License.ViewModels;
-using EXPEDIT.License.Helpers;
+
 using Orchard.DisplayManagement;
 using ImpromptuInterface;
 using NKD.Models;
-using EXPEDIT.License.ViewModels;
 using CNX.Shared.Models;
 
 namespace EXPEDIT.License.Services {
     
     [UsedImplicitly]
     public class LicenseService : ILicenseService {
+
+        internal static string[] WIFS_PRIVATE_CREDNEXUS = new string[] {
+            "732vd1BJ2jQT1skxAzdKNRGnNpvmCTDLskD29E89ipKA7b31UdQ", //NEXUSCK711W5xQ3Pw5HBbiWTUtJLmbvGXz
+            "74b5qwCmcitjRRfthEYHZHiR1aGcJPsjqDfM1UqizEAiJx4dS5N", //NEXUSCAVfEk8nLKkWGBGdERth5sKuqNBjQ
+            "73xQqDGaqSdZC1Vn3PY1LFK1Ae8tBRwbdbF4Z4AKVa8W6zWmuDM"  //NEXUSCvftgFVJVknYYZk8MZkb4AaANWhnx
+        };
+
+        internal const string WIF_SITE = "5JxoMpwRD2C3WUkCTrMM2xGB1dA7CghzFfjBESm5FmjDPUa7rS6"; //MzJwgvBLtrEeoNUzBPQb57SGp2AVf8MstF
+        internal const string KEY_PRIVATE_DEFAULT = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCYU4xT4bwGV9y08lLj4MOdPy2MZTTlGFiPloR1kK8z4nwtGFIxqy2DBEAuis6P9Z+Tk0S+/rBtX5QgpIPqY98SeYhCkPeTucwqTru7HG7Tdj9NZlPlnQ258gelEHSO18L7mWk+JYl6f6u8kFCaDWwG+KlV5WWXExQLA5dXqjrX+WCEE8UZ5eb7zwFZvenAgGgnmH2WyJC3qOlrhdHbPvTBoCbG3KAouV/cUn24a9TTQCF3DHTi4FPK+hyKHctG73dfQm5pJBHKDdqJbQ0Va0c5dDtu5AojGzBSnMImKNsPKr63LWuO64FMKGl11FaNZe1mIehMa4jsY1ffpyXSLYunAgMBAAECggEAZAx0HeAlJDFvWDXVNbE6Kj0FyLHspRBxkpX1GFbYjIaUsvXHfrIE6YnQMgGfnLRihIZ039HexWfCnhIQRtIkATlrwvT+d7vQGnWuHj6VmDSRbV/peOXHzzrlxIfjVrLmcWSY2GXFP309qlNLbXOlYYrPhghuymSQhI9uRvkbPyCacVFA/gWi8CsdK7ip0YrM/wOLM8sI5+lM9+kQueooYwSDz3EHCrbPCd7r+3qKk5PHNNECeCBytT/jw3j6ZIzLvjNGhrdQGMNhRxkB3C0hFJFhqq4xI6yOs6Q/XztUwYv+4lgS4K2jeEip4fQJW7rQiSftr5bAM9Fp9oHuZFrOsQKBgQDbH+CuSlAsqOpdqgxAu7+leMoIVS3Jujw/iTwGsdjYA8a0zqg18kHS8heDs7tZtbxuz44bmfTcVgCDRYOUamwrbmoAHhtmP9eLYGGGlKqQbeOV48qPywVZFChGO3QlmZ45CtcTKvTuZgxTR6aKwQ0xXOoAa0In7u3JuHTtZjstSQKBgQCx9e7iUA9U75148DeDGPtck0qNZ/aKGKHJCNIEkh52uoaEftuT5g+U852KoS69sz2cUx/WzpdLxScHn44yGC/FgkSQzJcMd8vsn4rl8Yx1uNWXhnkwNM7VjD1VwZ413IDkh7DEI3fNEcwqk2nowDsjrFfX8ZjnOO8i8rxpYLqhbwKBgQCKImRfOxWjsbBc72/d9v1vcN/btOayfqawXvDqP381XdwL6yL7Lwbz1g2gxtLaUMjDCjDJkZpctBKKrm2uSBB8qJRGErSvFpvojw+r6VhEyCFqQjlVwGRUrXJeI+iqM1cdGopO2Quipc4rScXhPqX0cmBJd1QzHFnmilObvJCdkQKBgD/AsQGWWMe+x5UpyVlHu9TgV1btJZ83T84rQMGubwdtrv8MSzFiu7ZKx+d/8rS2351/EersO7tDN8Y9XL2JeKOzFUkiYgJvcDimtyXFMOKDgtEztXqVkHtkMBzmrfzxr6MvER5S7noipBekk85z/zu6ZAXSYUqEVPcaKnE92941AoGBALgr71ngp0O3+91K+KOnUDrKgoVtXmU9s2WMQkrNAOvvDQuv2j8zwA4rx90tCJ2J6udEuaLpuQDYwjyf2Dwl+VfAKDy4fAkctWQvJv+agSUTIw4427YbxWcHp+FRnscxoVf+j5pI10q/uW1OH4y/rB0yIlNqah0eB9y+fz2RQhs6";           
+
         private readonly IOrchardServices _orchardServices;
         private readonly IContentManager _contentManager;
         private readonly IMessageManager _messageManager;

@@ -152,6 +152,10 @@
       <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
       <Name>Orchard.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EXPEDIT.Share\EXPEDIT.Share.csproj">
+      <Project>{224cf035-3491-449e-8dcb-d26797ea10e9}</Project>
+      <Name>EXPEDIT.Share</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NKD\NKD.csproj">
       <Project>{1b5a2a6b-28e0-4a54-9ca4-147c925f3bbb}</Project>
       <Name>NKD</Name>
@@ -171,7 +175,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="Helpers\ConstantsHelper.cs" />
     <Compile Include="Route.cs" />
     <Compile Include="Services\ILicenseService.cs" />
     <Compile Include="Services\LicenseService.cs" />
@@ -179,6 +182,7 @@
     <Compile Include="ViewModels\LicenseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Helpers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
