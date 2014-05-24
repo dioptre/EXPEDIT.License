@@ -130,7 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\..\..\..\crednexus\src\main\CNX.Shared\CNX.Shared.csproj">
-      <Project>{b303b44d-33f4-453c-bcf9-7a57bdd9b25b}</Project>
+      <Project>{359608d7-fafe-40e9-90c6-bd6df1c0fdcc}</Project>
       <Name>CNX.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\NKD.Extensions\NKD.Extensions.csproj">
